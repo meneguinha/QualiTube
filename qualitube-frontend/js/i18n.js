@@ -119,20 +119,7 @@ const translations = {
         step7_header: "Lembrete de Segurança Importante",
         step7_content: "<p><strong>Atenção com a segurança de sua chave de API!</strong></p><p>Sempre que você for orientar a IA a fazer alterações ou novas funcionalidades, lembre-se de <strong>nunca expor ou salvar sua chave de API diretamente nos arquivos de código-fonte</strong> do aplicativo.</p><p>Esse cuidado é essencial caso você decida colocar a ferramenta online (hospedá-la na internet ou compartilhar o código publicamente no GitHub). Chaves salvas diretamente nos arquivos podem ser expostas publicamente, permitindo que terceiros consumam sua cota de acesso.</p>",
         btn_understood: "Entendido",
-        btn_copy: "Copiar",
-        opt_comments_100: "100 comentários (1 chamada)",
-        opt_comments_500: "500 comentários (5 chamadas)",
-        opt_comments_1000: "1.000 comentários (10 chamadas)",
-        channel_no_description: "Sem descrição no canal.",
-        th_likes: "Curtidas",
-        th_comments: "Comentários",
-        th_duration: "Duração",
-        th_avatar: "Avatar",
-        th_searched_channel: "Canal Pesquisado",
-        th_official_title: "Título Oficial",
-        th_handle_id: "Handle / ID",
-        th_status: "Status",
-        license_tooltip: "Licença CC BY-NC-SA 4.0"
+        btn_copy: "Copiar"
     },
     en: {
         server_quota_title: "Server Quota",
@@ -254,19 +241,6 @@ const translations = {
         step7_header: "Important Security Reminder",
         step7_content: "<p><strong>Be careful with the security of your API key!</strong></p><p>Whenever you are guiding the AI to make changes or new features, remember to <strong>never expose or save your API key directly in the source code files</strong> of the application.</p><p>This care is essential if you decide to put the tool online (hosting it on the internet or sharing the code publicly on GitHub). Keys saved directly in the files can be exposed publicly, allowing third parties to consume your access quota.</p>",
         btn_understood: "Understood",
-        btn_copy: "Copy",
-        opt_comments_100: "100 comments (1 call)",
-        opt_comments_500: "500 comments (5 calls)",
-        opt_comments_1000: "1,000 comments (10 calls)",
-        channel_no_description: "No description available.",
-        th_likes: "Likes",
-        th_comments: "Comments",
-        th_duration: "Duration",
-        th_avatar: "Avatar",
-        th_searched_channel: "Searched Channel",
-        th_official_title: "Official Title",
-        th_handle_id: "Handle / ID",
-        th_status: "Status",
-        license_tooltip: "CC BY-NC-SA 4.0 License"
+        btn_copy: "Copy"
     }
 };
