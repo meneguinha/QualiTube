@@ -3,8 +3,8 @@
  * Gerencia o fluxo de trabalho do pesquisador, o estado volátil e a orquestração stateless.
  */
 
-// Configuração do Backend - Ajustado para testes locais
-const BACKEND_URL = 'http://localhost:8000';
+// Configuração do Backend - Ajustado para o Hugging Face Spaces
+const BACKEND_URL = 'https://fmenegottobr-qualitube-api.hf.space';
 
 // Estado global da aplicação (em memória do JavaScript)
 const AppState = {
