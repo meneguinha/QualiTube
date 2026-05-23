@@ -239,10 +239,8 @@ function setupEventListeners() {
     });
 
     // Cópia do ID do canal
-    DOM.tagChannelId.addEventListener('click', () => {
-        const id = DOM.tagChannelId.textContent.trim();
         navigator.clipboard.writeText(id).then(() => {
-            alert('ID do Canal copiado para a área de transferência!');
+            alert(AppState.language === 'pt' ? 'ID do Canal copiado para a área de transferência!' : 'Channel ID copied to clipboard!');
         }).catch(err => {
             console.error('Falha ao copiar ID:', err);
         });
@@ -313,7 +311,7 @@ function setupEventListeners() {
                 const promptText = promptTextElement.textContent.trim();
                 navigator.clipboard.writeText(promptText).then(() => {
                     const originalHTML = DOM.btnCopyPrompt.innerHTML;
-                    DOM.btnCopyPrompt.innerHTML = '<i class="fa-solid fa-check"></i> Copiado!';
+                    DOM.btnCopyPrompt.innerHTML = AppState.language === 'pt' ? '<i class="fa-solid fa-check"></i> Copiado!' : '<i class="fa-solid fa-check"></i> Copied!';
                     DOM.btnCopyPrompt.classList.remove('btn-secondary');
                     DOM.btnCopyPrompt.classList.add('btn-primary');
                     
@@ -324,7 +322,7 @@ function setupEventListeners() {
                     }, 2000);
                 }).catch(err => {
                     console.error('Erro ao copiar prompt:', err);
-                    alert('Não foi possível copiar automaticamente. Selecione o texto e copie manualmente.');
+                    alert(AppState.language === 'pt' ? 'Não foi possível copiar automaticamente. Selecione o texto e copie manualmente.' : 'Could not copy automatically. Please select the text and copy manually.');
                 });
             }
         });
@@ -567,7 +565,11 @@ function renderSearchResults(videos) {
         cb.addEventListener('change', handleVideoSelectionChange);
     });
 
-    DOM.searchResultsCount.textContent = `Mostrando ${AppState.searchResults.length} vídeos encontrados`;
+    if (AppState.language === 'pt') {
+        DOM.searchResultsCount.textContent = `Mostrando ${AppState.searchResults.length} vídeos encontrados`;
+    } else {
+        DOM.searchResultsCount.textContent = `Showing ${AppState.searchResults.length} videos found`;
+    }
 }
 
 /**
@@ -1144,8 +1146,13 @@ async function startChannelVideosExtractionWorkflow() {
         }
 
         // Concluído com sucesso
-        DOM.channelVideosStatusText.textContent = `Coleta concluída! Total de ${AppState.channelVideos.length} vídeos.`;
-        DOM.channelVideosCountTitle.textContent = `Vídeos Listados (${AppState.channelVideos.length})`;
+        if (AppState.language === 'pt') {
+            DOM.channelVideosStatusText.textContent = `Coleta concluída! Total de ${AppState.channelVideos.length} vídeos.`;
+            DOM.channelVideosCountTitle.textContent = `Vídeos Listados (${AppState.channelVideos.length})`;
+        } else {
+            DOM.channelVideosStatusText.textContent = `Collection completed! Total of ${AppState.channelVideos.length} videos.`;
+            DOM.channelVideosCountTitle.textContent = `Listed Videos (${AppState.channelVideos.length})`;
+        }
         DOM.channelVideosResultsWrapper.style.display = 'block';
 
         // Habilita e exibe o painel de comentários do canal
@@ -1547,7 +1554,11 @@ function pauseChannelCommentsExtractionWorkflow() {
  * Exibe o painel de exportação para os comentários coletados.
  */
 function showChannelCommentsExportModule() {
-    DOM.channelCommentsCountTitle.textContent = `Comentários Coletados (${AppState.channelExtractedComments.length.toLocaleString()})`;
+    if (AppState.language === 'pt') {
+        DOM.channelCommentsCountTitle.textContent = `Comentários Coletados (${AppState.channelExtractedComments.length.toLocaleString()})`;
+    } else {
+        DOM.channelCommentsCountTitle.textContent = `Collected Comments (${AppState.channelExtractedComments.length.toLocaleString()})`;
+    }
     DOM.channelCommentsExportWrapper.style.display = 'block';
     DOM.channelCommentsExportWrapper.scrollIntoView({ behavior: 'smooth' });
 }
@@ -1746,9 +1757,15 @@ async function performBatchChannelsMetadata() {
     DOM.btnBatchChannelsMetadata.disabled = false;
     DOM.btnBatchChannelsVideos.disabled = false;
 
-    DOM.batchChannelsMetadataTitle.textContent = `Metadados dos Canais (${AppState.batchChannelsResults.length})`;
-    DOM.batchChannelsStatusText.textContent = 'Concluído!';
-    logBatchChannelsConsole(`Busca em lote concluída! ${resolvedMap.size} de ${channelIds.length} canal(is) encontrado(s).`, 'success');
+    if (AppState.language === 'pt') {
+        DOM.batchChannelsMetadataTitle.textContent = `Metadados dos Canais (${AppState.batchChannelsResults.length})`;
+        DOM.batchChannelsStatusText.textContent = 'Concluído!';
+        logBatchChannelsConsole(`Busca em lote concluída! ${resolvedMap.size} de ${channelIds.length} canal(is) encontrado(s).`, 'success');
+    } else {
+        DOM.batchChannelsMetadataTitle.textContent = `Channels Metadata (${AppState.batchChannelsResults.length})`;
+        DOM.batchChannelsStatusText.textContent = 'Completed!';
+        logBatchChannelsConsole(`Batch search completed! ${resolvedMap.size} of ${channelIds.length} channel(s) found.`, 'success');
+    }
 }
 
 
@@ -1972,11 +1989,19 @@ function finalizeBatchVideosUI(processedCount) {
     DOM.btnBatchChannelsVideos.disabled = false;
     DOM.btnBatchChannelsPause.style.display = 'none';
 
-    DOM.batchChannelsVideosTitle.textContent = `Vídeos Consolidados (${AppState.batchChannelsVideos.length})`;
-    DOM.batchChannelsStatusText.textContent = 'Concluído!';
-    DOM.batchChannelsProgressPercentage.textContent = '100%';
-    DOM.batchChannelsProgressFill.style.width = '100%';
-    logBatchChannelsConsole(`Coleta paralela concluída! ${AppState.batchChannelsVideos.length} vídeo(s) de ${processedCount} canal(is).`, 'success');
+    if (AppState.language === 'pt') {
+        DOM.batchChannelsVideosTitle.textContent = `Vídeos Consolidados (${AppState.batchChannelsVideos.length})`;
+        DOM.batchChannelsStatusText.textContent = 'Concluído!';
+        DOM.batchChannelsProgressPercentage.textContent = '100%';
+        DOM.batchChannelsProgressFill.style.width = '100%';
+        logBatchChannelsConsole(`Coleta paralela concluída! ${AppState.batchChannelsVideos.length} vídeo(s) de ${processedCount} canal(is).`, 'success');
+    } else {
+        DOM.batchChannelsVideosTitle.textContent = `Consolidated Videos (${AppState.batchChannelsVideos.length})`;
+        DOM.batchChannelsStatusText.textContent = 'Completed!';
+        DOM.batchChannelsProgressPercentage.textContent = '100%';
+        DOM.batchChannelsProgressFill.style.width = '100%';
+        logBatchChannelsConsole(`Parallel collection completed! ${AppState.batchChannelsVideos.length} video(s) from ${processedCount} channel(s).`, 'success');
+    }
 }
 
 
