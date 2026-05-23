@@ -1,0 +1,24 @@
+# Ambientes Virtuais (Virtual Environments)
+venv/
+.venv/
+env/
+ENV/
+
+# Arquivos de Configuração Sensíveis (Secrets)
+.env
+.env.local
+.env.*.local
+
+# Cache do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Arquivos do Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Logs e arquivos temporários
+*.log

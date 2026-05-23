@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QualiTube | Extração de Dados para Ciências Sociais</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Folha de estilo customizada -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar lateral para configurações globais -->
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-square-poll-vertical logo-icon"></i>
+                <h2>QualiTube</h2>
+            </div>
+
+            <!-- Seletor de Idioma -->
+            <div class="language-selector-container">
+                <button id="btn-toggle-lang" class="lang-toggle-btn" title="Alterar idioma / Change language">
+                    <i class="fa-solid fa-globe"></i>
+                    <span id="lang-btn-text">English</span>
+                </button>
+            </div>
+            
+
+            <div class="sidebar-section server-quota-notice">
+                <h3 data-i18n="server_quota_title">Cota do Servidor</h3>
+                <div class="quota-notice-card">
+                    <p data-i18n="server_quota_text">O YouTube limita o uso a <strong>10.000 unidades diárias</strong> por chave de API. A chave padrão está no servidor e, por ser de uso coletivo, o aplicativo pode parar de funcionar caso muitas pessoas a utilizem no mesmo dia.</p>
+                </div>
+            </div>
+
+            <!-- Link do Pesquisador para mais cota -->
+            <div class="sidebar-section researcher-link-section">
+                <button id="link-researcher-guide" class="researcher-guide-btn" data-i18n-title="researcher_guide_btn_title" title="É pesquisador? Clique para ver como conseguir mais cota de API">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span data-i18n="researcher_guide_btn_text">É pesquisador? Tenha mais cota para usar e personalizar o app</span>
+                </button>
+                <div class="developer-info-card">
+                    <p data-i18n="developer_name">Desenvolvido por <strong>Felipe Menegotto</strong>.</p>
+                    <p class="dev-credentials" data-i18n="developer_credentials">Licenciado em Física UFRGS. Mestre em Cultura Científica Universidade de Lisboa. Pesquisador independente.</p>
+                    <a href="https://github.com/meneguinha/QualiTube" target="_blank" rel="noopener noreferrer" class="dev-github-link" data-i18n="dev_github_link">
+                        <i class="fa-brands fa-github"></i> Repositório no GitHub <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px;"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <p>QualiTube v1.0.0 (Stateless)</p>
+                <span data-i18n="sidebar_footer_sub">Voltado para pesquisa acadêmica</span>
+            </div>
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <main class="main-content">
+            <!-- Header superior -->
+            <header class="top-header">
+                <div class="header-title">
+                    <h1 data-i18n="dashboard_title">Painel do Pesquisador</h1>
+                    <p data-i18n="dashboard_subtitle">Extraia comentários e estruture redes do YouTube para análises de Ciências Sociais</p>
+                </div>
+                <div class="system-status">
+                    <span class="status-indicator online"></span>
+                    <span data-i18n="backend_status">Backend Local</span>
+                </div>
+            </header>
+
+            <!-- Menu de Módulos -->
+            <nav class="module-tabs">
+                <button class="tab-btn active" data-module="comments" data-i18n="tab_comments">
+                    <i class="fa-solid fa-comments"></i> Comentários por Tópico
+                </button>
+                <button class="tab-btn" data-module="channel" data-i18n="tab_channel">
+                    <i class="fa-solid fa-id-card"></i> Analisar Canal
+                </button>
+                <button class="tab-btn" data-module="batch-channels" data-i18n="tab_batch_channels">
+                    <i class="fa-solid fa-layer-group"></i> Canais em Lote
+                </button>
+            </nav>
+
+            <!-- Área de Conteúdo do Módulo Ativo -->
+            <div id="comments-module-content" class="module-content active">
+                <!-- Cards de fluxos de trabalho -->
+                <div class="workspace-grid">
+                <!-- Módulo 1: Amostragem / Busca de Vídeos -->
+                <section class="card shadow-lg" id="module-sampling">
+                    <div class="card-header">
+                        <div class="header-icon sampling-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+                        <div>
+                            <h2>Passo 1: Amostragem de Vídeos</h2>
+                            <p>Busque vídeos usando termos-chave ou IDs e filtre os alvos de pesquisa</p>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <form id="search-form" class="search-grid">
+                            <div class="input-field col-full">
+                                <label for="search-query">Palavras-chave (suporta operadores lógicos AND, OR, -)</label>
+                                <input type="text" id="search-query" placeholder="Ex: 'democracia' OR 'eleição' -futebol" required>
+                            </div>
+
+                            <div class="input-field">
+                                <label for="filter-channel">Canal (ID do Canal - Opcional)</label>
+                                <input type="text" id="filter-channel" placeholder="Ex: UC_x5DGlrNy2jd_v4vN76L7Q">
+                            </div>
+
+                            <div class="input-field">
+                                <label for="filter-published-after">Publicados Após</label>
+                                <input type="date" id="filter-published-after">
+                            </div>
+
+                            <div class="input-field">
+                                <label for="filter-published-before">Publicados Antes</label>
+                                <input type="date" id="filter-published-before">
+                            </div>
+
+                            <div class="input-field flex-end">
+                                <button type="submit" class="btn btn-primary" id="btn-search">
+                                    <i class="fa-solid fa-search"></i> Buscar Vídeos
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Resultados da Amostragem -->
+                        <div class="results-container" id="search-results-wrapper" style="display: none;">
+                            <div class="results-header">
+                                <h3>Vídeos Encontrados</h3>
+                                <div class="selection-actions">
+                                    <button class="btn btn-outline btn-xs" id="btn-select-all-videos">Selecionar Todos</button>
+                                    <button class="btn btn-outline btn-xs" id="btn-deselect-all-videos">Limpar Seleção</button>
+                                </div>
+                            </div>
+                            
+                            <div class="table-responsive">
+                                <table class="table" id="search-results-table">
+                                    <thead>
+                                        <tr>
+                                            <th width="40px">Selecionar</th>
+                                            <th>Miniatura</th>
+                                            <th id="th-title" style="cursor: pointer; user-select: none;" title="Ordenar por Título A-Z">Título <i class="fa-solid fa-sort sort-icon" style="margin-left: 4px; font-size: 11px; opacity: 0.6;"></i></th>
+                                            <th id="th-channel" style="cursor: pointer; user-select: none;" title="Ordenar por Canal">Canal <i class="fa-solid fa-sort sort-icon" style="margin-left: 4px; font-size: 11px; opacity: 0.6;"></i></th>
+                                            <th id="th-views" style="cursor: pointer; user-select: none;" title="Ordenar por Visualizações">Visualizações <i class="fa-solid fa-sort sort-icon" style="margin-left: 4px; font-size: 11px; opacity: 0.6;"></i></th>
+                                            <th id="th-published" style="cursor: pointer; user-select: none;" title="Ordenar por Data de Publicação">Publicação <i class="fa-solid fa-sort sort-icon" style="margin-left: 4px; font-size: 11px; opacity: 0.6;"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="search-results-tbody">
+                                        <!-- Populado dinamicamente -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="pagination-footer">
+                                <span id="search-results-count">Mostrando 0 vídeos</span>
+                                <button class="btn btn-outline btn-xs" id="btn-search-next-page" disabled>
+                                    Carregar Mais Vídeos <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Módulo 2: Simulador e Extração Profunda -->
+                <section class="card shadow-lg" id="module-extraction">
+                    <div class="card-header">
+                        <div class="header-icon extraction-icon"><i class="fa-solid fa-circle-down"></i></div>
+                        <div>
+                            <h2>Passo 2: Simulador & Extração Profunda</h2>
+                            <p>Estime o custo, monitore a cota e capture comentários em lote</p>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="selection-summary">
+                            <div class="summary-metric">
+                                <span class="metric-label">Vídeos Alvo Selecionados</span>
+                                <span class="metric-value" id="selected-videos-count">0</span>
+                            </div>
+                            
+                            <div class="summary-metric">
+                                <span class="metric-label">Estimativa de Custos</span>
+                                <span class="metric-value highlight" id="estimated-quota-cost">0 unidades</span>
+                                <small class="text-muted" id="estimated-cost-breakdown">Custo em cota da API</small>
+                            </div>
+                        </div>
+
+                        <!-- Painel de Execução de Extração -->
+                        <div class="extraction-controls">
+                            <div class="settings-inline">
+                                <div class="input-field">
+                                    <label for="max-comments-per-video">Máximo de comentários por vídeo</label>
+                                    <select id="max-comments-per-video">
+                                        <option value="100">100 comentários (1 chamada)</option>
+                                        <option value="500">500 comentários (5 chamadas)</option>
+                                        <option value="1000">1.000 comentários (10 chamadas)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="actions-group-row">
+                                <button class="btn btn-success btn-lg" id="btn-start-extraction" disabled>
+                                    <i class="fa-solid fa-play"></i> Iniciar Coleta Profunda
+                                </button>
+                                <button class="btn btn-warning btn-lg" id="btn-pause-extraction" style="display: none;">
+                                    <i class="fa-solid fa-pause"></i> Pausar Coleta
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Progresso da Coleta -->
+                        <div class="extraction-progress-panel" id="extraction-progress-wrapper" style="display: none;">
+                            <div class="progress-details">
+                                <span id="extraction-status-text">Processando...</span>
+                                <span id="extraction-progress-percentage">0%</span>
+                            </div>
+                            <div class="progress-bar-bg-lg">
+                                <div id="extraction-progress-fill" class="progress-bar-fill-lg" style="width: 0%;"></div>
+                            </div>
+                            <div class="extraction-logs" id="extraction-log-console">
+                                <!-- Console de logs de extração -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Módulo 3: Exportação de Dados -->
+                <section class="card shadow-lg" id="module-export" style="display: none;">
+                    <div class="card-header">
+                        <div class="header-icon export-icon"><i class="fa-solid fa-file-export"></i></div>
+                        <div>
+                            <h2>Passo 3: Exportação e Estruturação</h2>
+                            <p>Converta dados de comentários e interações em formatos quantitativos e de redes</p>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="success-message">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <div>
+                                <h4>Extração Concluída com Sucesso!</h4>
+                                <p id="extraction-results-summary">Foram extraídos 0 comentários do total de vídeos analisados.</p>
+                            </div>
+                        </div>
+
+                        <div class="export-grid">
+                            <!-- Card de Rede Gephi -->
+                            <div class="export-card">
+                                <h3><i class="fa-solid fa-diagram-project"></i> Redes Sociais (.GEXF)</h3>
+                                <p>Cria rede de interação (autores de comentários conectados aos vídeos). Pronto para importar no Gephi.</p>
+                                <button class="btn btn-primary btn-block" id="btn-export-gexf">
+                                    <i class="fa-solid fa-download"></i> Baixar GEXF (Redes)
+                                </button>
+                            </div>
+
+                            <!-- Card de Planilha CSV -->
+                            <div class="export-card">
+                                <h3><i class="fa-solid fa-table"></i> Planilha Plana (.CSV)</h3>
+                                <p>Tabela de comentários limpa, incluindo IDs, texto, data, autor e likes. Adequado para R, SPSS, Python e Excel.</p>
+                                <button class="btn btn-primary btn-block" id="btn-export-csv">
+                                    <i class="fa-solid fa-download"></i> Baixar CSV (Tabela)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            </div>
+
+            <!-- Área de Conteúdo do Módulo Analisar Canal -->
+            <div id="channel-module-content" class="module-content">
+                <div class="workspace-grid">
+                    <section class="card shadow-lg" id="module-channel-search">
+                        <div class="card-header">
+                            <div class="header-icon sampling-icon"><i class="fa-solid fa-id-card"></i></div>
+                            <div>
+                                <h2>Analisar Canal</h2>
+                                <p>Pesquise por nome, handle (@exemplo) ou ID do canal (UC...) para coletar metadados e estatísticas</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form id="channel-search-form" class="search-grid" style="grid-template-columns: 3fr 1.2fr; gap: 16px;">
+                                <div class="input-field">
+                                    <label for="channel-query">Nome do Canal, Handle ou ID</label>
+                                    <input type="text" id="channel-query" placeholder="Ex: @AtilaIamarino ou UC_x5DGlrNy2jd_v4vN76L7Q" required>
+                                </div>
+                                <div class="input-field flex-end">
+                                    <button type="submit" class="btn btn-primary btn-block" id="btn-search-channel">
+                                        <i class="fa-solid fa-magnifying-glass"></i> Analisar Canal
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <!-- Metadados do Canal -->
+                            <div id="channel-result-wrapper" style="display: none; margin-top: 24px; border-top: var(--border-width) solid var(--border-color); padding-top: 24px;">
+                                <div class="channel-profile-header" style="display: flex; gap: 20px; align-items: flex-start; margin-bottom: 24px;">
+                                    <img id="channel-avatar" src="" alt="Avatar do Canal" style="width: 80px; height: 80px; border-radius: 50%; border: var(--border-width) solid var(--border-color); background-color: var(--secondary); object-fit: cover;">
+                                    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 6px;">
+                                        <h3 id="channel-title-display" style="font-size: 20px; font-weight: 500;">
+                                            Título do Canal
+                                        </h3>
+                                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                            <span id="tag-channel-handle" class="tag-category">@handle</span>
+                                            <span id="tag-channel-id" class="tag-metadata" style="cursor: pointer;" title="Clique para copiar ID"><i class="fa-regular fa-copy"></i> UC...</span>
+                                            <span id="tag-channel-country" class="tag-metadata">País: BR</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="input-field" style="margin-bottom: 24px;">
+                                    <label>Descrição do Canal</label>
+                                    <p id="channel-description" style="font-size: 13px; color: var(--text-secondary); line-height: 1.5; background-color: var(--bg-primary); padding: 12px; border-radius: var(--radius-component); max-height: 150px; overflow-y: auto; font-weight: 400;">
+                                        Sem descrição no canal.
+                                    </p>
+                                </div>
+                                
+                                <div class="selection-summary" style="margin-bottom: 0; grid-template-columns: 1fr 1fr 1fr;">
+                                    <div class="summary-metric">
+                                        <span class="metric-label">Inscritos</span>
+                                        <span class="metric-value" id="channel-metric-subscribers">0</span>
+                                    </div>
+                                    <div class="summary-metric">
+                                        <span class="metric-label">Vídeos Enviados</span>
+                                        <span class="metric-value" id="channel-metric-videos">0</span>
+                                    </div>
+                                    <div class="summary-metric">
+                                        <span class="metric-label">Visualizações Totais</span>
+                                        <span class="metric-value highlight" id="channel-metric-views">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- CARD 2: Listagem de Vídeos do Canal (Independente) -->
+                    <section class="card shadow-lg" id="channel-videos-extraction-panel" style="display: none;">
+                        <div class="card-header">
+                            <div class="header-icon sampling-icon"><i class="fa-solid fa-list-check"></i></div>
+                            <div>
+                                <h2>Listagem de Vídeos</h2>
+                                <p>Obtenha a lista completa de vídeos deste canal com todos os metadados (visualizações, curtidas, comentários e duração).</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="quota-progress-container" style="margin-bottom: 16px; background-color: var(--bg-primary);">
+                                <div class="quota-info">
+                                    <span>Estimativa de Cota Necessária:</span>
+                                    <strong id="channel-videos-estimated-cost">0 unidades</strong>
+                                </div>
+                                <p class="section-desc" id="channel-videos-cost-breakdown" style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">
+                                    Custo calculado: 2 unidades de cota a cada 50 vídeos.
+                                </p>
+                            </div>
+                            
+                            <button type="button" class="btn btn-success btn-lg btn-block" id="btn-start-channel-videos-extraction">
+                                <i class="fa-solid fa-play"></i> Listar todos os vídeos do canal
+                            </button>
+                            
+                            <!-- Progresso de Extração de Vídeos do Canal -->
+                            <div id="channel-videos-progress-wrapper" style="display: none; margin-top: 16px;">
+                                <div class="progress-details">
+                                    <span id="channel-videos-status-text">Coletando...</span>
+                                    <span id="channel-videos-progress-percentage">0%</span>
+                                </div>
+                                <div class="progress-bar-bg-lg" style="margin-top: 8px; margin-bottom: 12px;">
+                                    <div id="channel-videos-progress-fill" class="progress-bar-fill-lg" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Resultados dos Vídeos do Canal -->
+                            <div id="channel-videos-results-wrapper" style="display: none; margin-top: 24px; border-top: var(--border-width) solid var(--border-color); padding-top: 20px;">
+                                <div class="results-header">
+                                    <h3 id="channel-videos-count-title">Vídeos Listados (0)</h3>
+                                </div>
+                                
+                                <div class="table-responsive" style="max-height: 480px; overflow-y: auto;">
+                                    <table class="table" id="channel-videos-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Miniatura</th>
+                                                <th>Título</th>
+                                                <th>Visualizações</th>
+                                                <th>Curtidas</th>
+                                                <th>Comentários</th>
+                                                <th>Publicação</th>
+                                                <th>Duração</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="channel-videos-tbody">
+                                            <!-- Populados dinamicamente -->
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div style="margin-top: 16px; display: flex; justify-content: flex-end;">
+                                    <button type="button" class="btn btn-primary btn-sm" id="btn-export-channel-videos-csv">
+                                        <i class="fa-solid fa-download"></i> Exportar CSV de Vídeos
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- CARD 3: Extração de Comentários do Canal (Independente) -->
+                    <section class="card shadow-lg" id="channel-comments-extraction-panel" style="display: none;">
+                        <div class="card-header">
+                            <div class="header-icon extraction-icon"><i class="fa-solid fa-comments"></i></div>
+                            <div>
+                                <h2>Extrair comentários dos vídeos do canal</h2>
+                                <p>Capture comentários em lote dos vídeos do canal aplicando filtros temporais e limites de cota.</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!-- Configurações de Filtro e Limite -->
+                            <div class="search-grid" style="grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                                <div class="input-field">
+                                    <label for="channel-comments-scope">Filtrar Vídeos por Escopo</label>
+                                    <select id="channel-comments-scope">
+                                        <option value="all">Todos os vídeos do canal</option>
+                                        <option value="date">Vídeos publicados entre datas</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="input-field">
+                                    <label for="channel-comments-limit">Máximo de comentários por vídeo</label>
+                                    <select id="channel-comments-limit">
+                                        <option value="100">100 comentários (1 chamada)</option>
+                                        <option value="500">500 comentários (5 chamadas)</option>
+                                        <option value="1000">1.000 comentários (10 chamadas)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Filtros de data -->
+                            <div class="search-grid" id="channel-comments-dates-wrapper" style="display: none; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                                <div class="input-field">
+                                    <label for="channel-comments-date-start">Data Inicial</label>
+                                    <input type="date" id="channel-comments-date-start">
+                                </div>
+                                <div class="input-field">
+                                    <label for="channel-comments-date-end">Data Final</label>
+                                    <input type="date" id="channel-comments-date-end">
+                                </div>
+                            </div>
+
+                            <!-- Painel de Informação de Cota -->
+                            <div class="quota-progress-container" style="margin-bottom: 16px; background-color: var(--bg-primary);">
+                                <div class="quota-info">
+                                    <span>Estimativa de Cota para Comentários:</span>
+                                    <strong id="channel-comments-estimated-cost">0 unidades</strong>
+                                </div>
+                                <p class="section-desc" id="channel-comments-cost-breakdown" style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">
+                                    Nenhum vídeo selecionado ou filtrado.
+                                </p>
+                            </div>
+
+                            <!-- Controles de Coleta -->
+                            <div style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 12px;">
+                                <button type="button" class="btn btn-success btn-lg btn-block" id="btn-start-channel-comments-extraction">
+                                    <i class="fa-solid fa-play"></i> Iniciar Coleta de Comentários
+                                </button>
+                                <button type="button" class="btn btn-warning btn-lg btn-block" id="btn-pause-channel-comments-extraction" style="display: none;">
+                                    <i class="fa-solid fa-pause"></i> Pausar Coleta
+                                </button>
+                            </div>
+
+                            <!-- Progresso de Coleta de Comentários -->
+                            <div id="channel-comments-progress-wrapper" style="display: none; margin-top: 16px;">
+                                <div class="progress-details">
+                                    <span id="channel-comments-status-text">Coletando...</span>
+                                    <span id="channel-comments-progress-percentage">0%</span>
+                                </div>
+                                <div class="progress-bar-bg-lg" style="margin-top: 8px; margin-bottom: 12px;">
+                                    <div id="channel-comments-progress-fill" class="progress-bar-fill-lg" style="width: 0%;"></div>
+                                </div>
+                                <div class="extraction-logs" id="channel-comments-log-console">
+                                    <!-- Logs de extração de comentários -->
+                                </div>
+                            </div>
+
+                            <!-- Painel de Exportação dos Comentários Coletados -->
+                            <div id="channel-comments-export-wrapper" style="display: none; margin-top: 24px; border-top: var(--border-width) solid var(--border-color); padding-top: 20px;">
+                                <div class="results-header">
+                                    <h3 id="channel-comments-count-title">Comentários Coletados (0)</h3>
+                                    <div class="selection-actions" style="display: flex; gap: 8px;">
+                                        <button type="button" class="btn btn-primary btn-sm" id="btn-export-channel-comments-csv">
+                                            <i class="fa-solid fa-download"></i> Baixar CSV (Tabela)
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-sm" id="btn-export-channel-comments-gexf">
+                                            <i class="fa-solid fa-download"></i> Baixar GEXF (Redes)
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Área de Conteúdo do Módulo Canais em Lote -->
+            <div id="batch-channels-module-content" class="module-content">
+                <div class="workspace-grid">
+                    <section class="card shadow-lg" id="module-batch-channels">
+                        <div class="card-header">
+                            <div class="header-icon sampling-icon"><i class="fa-solid fa-layer-group"></i></div>
+                            <div>
+                                <h2>Canais em Lote</h2>
+                                <p>Cole uma lista de canais para consolidar metadados ou listar todos os seus vídeos em tabelas agregadas.</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-field" style="margin-bottom: 20px;">
+                                <label for="batch-channels-input">IDs dos Canais (UC...) — um por linha ou separados por vírgula</label>
+                                <textarea id="batch-channels-input" rows="8" placeholder="Ex:&#10;UCsvqVGtbbyHaMoevxPAq9Fg&#10;UC_x5DGlrNy2jd_v4vN76L7Q, UCBcRF18a7Qf58cCRy5xuWwQ&#10;UCJrDMFOdv1I2k8n9oK_oskQ" style="width: 100%; background-color: var(--bg-primary); border: var(--border-width) solid var(--border-color); color: var(--text-primary); padding: 12px; border-radius: var(--radius-component); font-size: 13px; font-family: monospace; line-height: 1.5; resize: vertical; outline: none;"></textarea>
+                                <p style="margin-top: 6px; font-size: 11px; color: var(--text-secondary);"><i class="fa-solid fa-circle-info" style="margin-right: 4px;"></i>Aceita apenas IDs de canal do YouTube (começam com <strong>UC</strong> e têm 24 caracteres). Use o módulo <strong>Analisar Canal</strong> para encontrar o ID de um canal pelo nome ou @handle.</p>
+                            </div>
+
+                            <div style="margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                <button type="button" class="btn btn-primary btn-lg btn-block" id="btn-batch-channels-metadata">
+                                    <i class="fa-solid fa-table-list"></i> Listar Metadados dos Canais
+                                </button>
+                                <button type="button" class="btn btn-success btn-lg btn-block" id="btn-batch-channels-videos">
+                                    <i class="fa-solid fa-video"></i> Listar Vídeos de Todos os Canais
+                                </button>
+                            </div>
+
+                            <!-- Barra de Progresso de Lote -->
+                            <div id="batch-channels-progress-wrapper" style="display: none; margin-bottom: 24px; border-top: var(--border-width) solid var(--border-color); padding-top: 20px;">
+                                <div class="progress-details">
+                                    <span id="batch-channels-status-text">Processando...</span>
+                                    <span id="batch-channels-progress-percentage">0%</span>
+                                </div>
+                                <div class="progress-bar-bg-lg" style="margin-top: 8px; margin-bottom: 12px;">
+                                    <div id="batch-channels-progress-fill" class="progress-bar-fill-lg" style="width: 0%;"></div>
+                                </div>
+                                <div class="extraction-logs" id="batch-channels-log-console" style="margin-bottom: 16px; height: 180px; overflow-y: auto;">
+                                    <!-- Console de logs de lote -->
+                                </div>
+                                <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                                    <button type="button" class="btn btn-warning btn-xs" id="btn-batch-channels-pause" style="display: none;">
+                                        <i class="fa-solid fa-pause"></i> Pausar Processo
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Resultados: Tabela de Metadados -->
+                            <div id="batch-channels-metadata-results" style="display: none; border-top: var(--border-width) solid var(--border-color); padding-top: 20px;">
+                                <div class="results-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                    <h3 id="batch-channels-metadata-title">Metadados dos Canais (0)</h3>
+                                    <button type="button" class="btn btn-primary btn-sm" id="btn-export-batch-channels-metadata-csv">
+                                        <i class="fa-solid fa-download"></i> Exportar CSV de Metadados
+                                    </button>
+                                </div>
+                                <div class="table-responsive" style="max-height: 480px; overflow-y: auto;">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Avatar</th>
+                                                <th>Canal Pesquisado</th>
+                                                <th>Título Oficial</th>
+                                                <th>Handle / ID</th>
+                                                <th>Inscritos</th>
+                                                <th>Vídeos</th>
+                                                <th>Visualizações</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="batch-channels-metadata-tbody">
+                                            <!-- Preenchido dinamicamente -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Resultados: Tabela de Vídeos Consolidada -->
+                            <div id="batch-channels-videos-results" style="display: none; border-top: var(--border-width) solid var(--border-color); padding-top: 20px;">
+                                <div class="results-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                    <h3 id="batch-channels-videos-title">Vídeos Consolidados (0)</h3>
+                                    <button type="button" class="btn btn-primary btn-sm" id="btn-export-batch-channels-videos-csv">
+                                        <i class="fa-solid fa-download"></i> Exportar CSV de Vídeos
+                                    </button>
+                                </div>
+                                <div class="table-responsive" style="max-height: 480px; overflow-y: auto;">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Canal</th>
+                                                <th>Miniatura</th>
+                                                <th>Título do Vídeo</th>
+                                                <th>Visualizações</th>
+                                                <th>Curtidas</th>
+                                                <th>Comentários</th>
+                                                <th>Publicação</th>
+                                                <th>Duração</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="batch-channels-videos-tbody">
+                                            <!-- Preenchido dinamicamente -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Guia do Pesquisador -->
+    <div id="researcher-modal" class="modal-backdrop" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-header-title">
+                    <i class="fa-solid fa-graduation-cap header-icon"></i>
+                    <h2 data-i18n="modal_title">Guia do Pesquisador</h2>
+                </div>
+                <button id="btn-close-researcher-modal" class="modal-close-btn" title="Fechar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-intro" data-i18n="modal_intro_p1">
+                    O YouTube disponibiliza gratuitamente <strong>10.000 cotas diárias</strong> para desenvolvedores em sua API de extração de dados. No entanto, as diretrizes do YouTube me proíbem de simplesmente pegar a sua chave de API para que as pessoas sejam consideradas usuários. Por isso, a única forma permitida de ter sua cota de acesso dedicada é rodando o aplicativo localmente no seu computador.
+                </p>
+                <p class="modal-intro-highlight" data-i18n="modal_intro_p2">
+                    Mas a boa notícia é que <strong>qualquer pessoa pode ser um desenvolvedor hoje sem saber programar nenhuma linha de código</strong>! Com o auxílio de inteligência artificial, você pode rodar o app no seu PC com sua própria chave e ter cota ilimitada e controle total para customizar o app.
+                </p>
+                
+                <h3 class="steps-title" data-i18n="modal_steps_title">Passo a Passo para Ter Mais Cota e Autonomia</h3>
+                
+                <div class="accordion-container">
+                    <!-- Passo I -->
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span class="step-badge">I</span>
+                            <span class="step-title" data-i18n="step1_header">Faça um Fork do Código no GitHub</span>
+                            <i class="fa-solid fa-chevron-down accordion-arrow"></i>
+                        </button>
+                        <div class="accordion-content" data-i18n="step1_content">
+                            <p>Fazer um "fork" significa criar uma cópia idêntica do código original deste projeto sob a sua própria conta do GitHub. Isso permite que você faça alterações e rode o projeto de forma independente e segura.</p>
+                            <ol>
+                                <li>Acesse o <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub <i class="fa-solid fa-arrow-up-right-from-square"></i></a> e crie uma conta gratuita caso não possua.</li>
+                                <li>Visite o <a href="https://github.com/meneguinha/QualiTube" target="_blank" rel="noopener noreferrer">repositório do QualiTube no GitHub <i class="fa-solid fa-arrow-up-right-from-square"></i></a>.</li>
+                                <li>Clique no botão <strong>Fork</strong> no canto superior direito da página do repositório para criar a sua cópia.</li>
+                                <li>Na página do seu fork, clique no botão verde <strong>Code</strong> e escolha a opção <strong>Download ZIP</strong> (ou use o Git para clonar se preferir). Extraia o arquivo baixado para uma pasta no seu computador.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Passo II -->
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span class="step-badge">II</span>
+                            <span class="step-title" data-i18n="step2_header">Baixe o Antigravity 2.0</span>
+                            <i class="fa-solid fa-chevron-down accordion-arrow"></i>
+                        </button>
+                        <div class="accordion-content" data-i18n="step2_content">
+                            <p>O <strong>Antigravity 2.0</strong> é um assistente inteligente de programação em linguagem natural. Ele permite que você converse com o código-fonte do seu projeto para realizar ajustes e rodar comandos.</p>
+                            <ul>
+                                <li>Acesse a página oficial e <a href="https://antigravity.google/download" target="_blank" rel="noopener noreferrer">baixe o Antigravity 2.0 <i class="fa-solid fa-arrow-up-right-from-square"></i></a> para instalá-lo no seu computador.</li>
+                                <li>Você poderá orientar o software em linguagem natural (português) a fazer o que você quiser no código, sem precisar escrever sintaxes complexas.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Passo III -->
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span class="step-badge">III</span>
+                            <span class="step-title" data-i18n="step3_header">Crie uma Conta no Google Cloud Console</span>
+                            <i class="fa-solid fa-chevron-down accordion-arrow"></i>
+                        </button>
+                        <div class="accordion-content" data-i18n="step3_content">
+                            <p>O Google Cloud Console é a plataforma onde desenvolvedores solicitam acesso às APIs do Google. A ativação e o uso da API do YouTube são totalmente gratuitos para o limite diário padrão.</p>
+                            <ol>
+                                <li>Acesse o <a href="https://console.cloud.google.com/" target="_blank" rel="noopener noreferrer">Google Cloud Console <i class="fa-solid fa-arrow-up-right-from-square"></i></a> e faça login com sua conta do Google.</li>
+                                <li>Crie um novo projeto clicando no seletor de projetos no menu superior e escolhendo "Novo Projeto" (ex: <em>QualiTube</em>).</li>
+                                <li>No painel do projeto, vá na barra de pesquisa superior, busque por <strong>YouTube Data API v3</strong> e clique em <strong>Ativar</strong>. Para referência, você pode acessar a documentação oficial: <a href="https://developers.google.com/youtube/v3/getting-started" target="_blank" rel="noopener noreferrer">Instruções do Google para Chave de API do YouTube <i class="fa-solid fa-arrow-up-right-from-square"></i></a>.</li>
+                                <li>No menu lateral esquerdo, acesse <strong>APIs e Serviços</strong> &gt; <strong>Credenciais</strong>.</li>
+                                <li>Clique em <strong>+ Criar Credenciais</strong> no topo e escolha <strong>Chave de API</strong>. Uma chave será gerada (um texto longo). Copie essa chave e salve em local seguro.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Passo IV -->
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span class="step-badge">IV</span>
+                            <span class="step-title" data-i18n="step4_header">Abra a Pasta no Antigravity</span>
+                            <i class="fa-solid fa-chevron-down accordion-arrow"></i>
+                        </button>
+                        <div class="accordion-content" data-i18n="step4_content">
+                            <p>Agora que você tem o código-fonte no seu PC e o assistente instalado, vamos conectá-los.</p>
+                            <ol>
+                                <li>Abra o aplicativo <strong>Antigravity 2.0</strong> no seu PC.</li>
+                                <li>Selecione a opção de abrir uma pasta de projeto existente e escolha a pasta com os arquivos do QualiTube que você extraiu no Passo I.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Passo V -->
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span class="step-badge">V</span>
+                            <span class="step-title" data-i18n="step5_header">Escreva o Prompt de Configuração Local</span>
+                            <i class="fa-solid fa-chevron-down accordion-arrow"></i>
+                        </button>
+                        <div class="accordion-content" data-i18n="step5_content">
+                            <p>No chat do Antigravity 2.0, escreva o seguinte prompt em português para que ele ensine você e configure tudo de forma guiada:</p>
+                            <div class="prompt-box">
+                                <code id="prompt-text">Quero rodar localmente no meu PC com minha chave de API do Youtube. Não sou programador. Me oriente no passo a passo de como fazer.</code>
+                                <button id="btn-copy-prompt" class="btn btn-secondary btn-sm" data-i18n="btn_copy" title="Copiar prompt">
+                                    <i class="fa-regular fa-copy"></i> Copiar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Passo VI -->
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span class="step-badge">VI</span>
+                            <span class="step-title" data-i18n="step6_header">Crie Funcionalidades Personalizadas</span>
+                            <i class="fa-solid fa-chevron-down accordion-arrow"></i>
+                        </button>
+                        <div class="accordion-content" data-i18n="step6_content">
+                            <p>Pronto! Com o app rodando localmente no seu computador e com o auxílio do Antigravity 2.0, você pode criar as funcionalidades personalizadas que desejar para sua pesquisa acadêmica.</p>
+                            <p>Basta pedir para o assistente em português para fazer alterações estéticas, novos filtros de dados ou novos formatos de relatórios. O controle é todo seu!</p>
+                        </div>
+                    </div>
+
+                    <!-- Passo VII -->
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span class="step-badge">VII</span>
+                            <span class="step-title" data-i18n="step7_header">Lembrete de Segurança Importante</span>
+                            <i class="fa-solid fa-chevron-down accordion-arrow"></i>
+                        </button>
+                        <div class="accordion-content" data-i18n="step7_content">
+                            <p><strong>Atenção com a segurança de sua chave de API!</strong></p>
+                            <p>Sempre que você for orientar a IA a fazer alterações ou novas funcionalidades, lembre-se de <strong>nunca expor ou salvar sua chave de API diretamente nos arquivos de código-fonte</strong> do aplicativo.</p>
+                            <p>Esse cuidado é essencial caso você decida colocar a ferramenta online (hospedá-la na internet ou compartilhar o código publicamente no GitHub). Chaves salvas diretamente nos arquivos podem ser expostas publicamente, permitindo que terceiros consumam sua cota de acesso.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-close-researcher-modal-footer" class="btn btn-primary" data-i18n="btn_understood">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts da aplicação -->
+    <script src="js/i18n.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
