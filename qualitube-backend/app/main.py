@@ -10,13 +10,14 @@ app = FastAPI(
     debug=settings.DEBUG
 )
 
-# Configuração de CORS permissiva para testes de desenvolvimento local
+# Configuração de CORS restrita para segurança em desenvolvimento e produção
 origins = [
-    "http://localhost:5500",   # Live Server VS Code
+    "http://localhost:5500",       # Live Server VS Code
     "http://127.0.0.1:5500",
     "http://localhost:3000",
-    "http://localhost:8000",   # Próprio FastAPI
-    "*"                        # Permissivo temporário para testes locais iniciais
+    "http://localhost:8000",       # Próprio FastAPI
+    "http://localhost:5173",       # Vite padrão
+    "https://meneguinha.github.io" # Produção GitHub Pages
 ]
 
 app.add_middleware(
