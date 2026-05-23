@@ -239,6 +239,8 @@ function setupEventListeners() {
     });
 
     // Cópia do ID do canal
+    DOM.tagChannelId.addEventListener('click', () => {
+        const id = DOM.tagChannelId.textContent.trim();
         navigator.clipboard.writeText(id).then(() => {
             alert(AppState.language === 'pt' ? 'ID do Canal copiado para a área de transferência!' : 'Channel ID copied to clipboard!');
         }).catch(err => {
