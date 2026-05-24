@@ -91,35 +91,35 @@
                     <div class="card-header">
                         <div class="header-icon sampling-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
                         <div>
-                            <h2>Passo 1: Amostragem de Vídeos</h2>
-                            <p>Busque vídeos usando termos-chave ou IDs e filtre os alvos de pesquisa</p>
+                            <h2 data-i18n="step1_title">Passo 1: Amostragem de Vídeos</h2>
+                            <p data-i18n="step1_desc">Busque vídeos usando termos-chave ou IDs e filtre os alvos de pesquisa</p>
                         </div>
                     </div>
 
                     <div class="card-body">
                         <form id="search-form" class="search-grid">
                             <div class="input-field col-full">
-                                <label for="search-query">Palavras-chave (suporta operadores lógicos AND, OR, -)</label>
-                                <input type="text" id="search-query" placeholder="Ex: 'democracia' OR 'eleição' -futebol" required>
+                                <label for="search-query" data-i18n="search_query_label">Palavras-chave (suporta operadores lógicos AND, OR, -)</label>
+                                <input type="text" id="search-query" data-i18n-placeholder="search_query_placeholder" placeholder="Ex: 'democracia' OR 'eleição' -futebol" required>
                             </div>
 
                             <div class="input-field">
-                                <label for="filter-channel">Canal (ID do Canal - Opcional)</label>
+                                <label for="filter-channel" data-i18n="filter_channel_label">Canal (ID do Canal - Opcional)</label>
                                 <input type="text" id="filter-channel" placeholder="Ex: UC_x5DGlrNy2jd_v4vN76L7Q">
                             </div>
 
                             <div class="input-field">
-                                <label for="filter-published-after">Publicados Após</label>
+                                <label for="filter-published-after" data-i18n="filter_published_after_label">Publicados Após</label>
                                 <input type="date" id="filter-published-after">
                             </div>
 
                             <div class="input-field">
-                                <label for="filter-published-before">Publicados Antes</label>
+                                <label for="filter-published-before" data-i18n="filter_published_before_label">Publicados Antes</label>
                                 <input type="date" id="filter-published-before">
                             </div>
 
                             <div class="input-field flex-end">
-                                <button type="submit" class="btn btn-primary" id="btn-search">
+                                <button type="submit" class="btn btn-primary" id="btn-search" data-i18n="btn_search_videos">
                                     <i class="fa-solid fa-search"></i> Buscar Vídeos
                                 </button>
                             </div>
@@ -128,10 +128,10 @@
                         <!-- Resultados da Amostragem -->
                         <div class="results-container" id="search-results-wrapper" style="display: none;">
                             <div class="results-header">
-                                <h3>Vídeos Encontrados</h3>
+                                <h3 data-i18n="search_results_title">Vídeos Encontrados</h3>
                                 <div class="selection-actions">
-                                    <button class="btn btn-outline btn-xs" id="btn-select-all-videos">Selecionar Todos</button>
-                                    <button class="btn btn-outline btn-xs" id="btn-deselect-all-videos">Limpar Seleção</button>
+                                    <button class="btn btn-outline btn-xs" id="btn-select-all-videos" data-i18n="btn_select_all">Selecionar Todos</button>
+                                    <button class="btn btn-outline btn-xs" id="btn-deselect-all-videos" data-i18n="btn_deselect_all">Limpar Seleção</button>
                                 </div>
                             </div>
                             
@@ -139,12 +139,12 @@
                                 <table class="table" id="search-results-table">
                                     <thead>
                                         <tr>
-                                            <th width="40px">Selecionar</th>
-                                            <th>Miniatura</th>
-                                            <th id="th-title" style="cursor: pointer; user-select: none;" title="Ordenar por Título A-Z">Título <i class="fa-solid fa-sort sort-icon" style="margin-left: 4px; font-size: 11px; opacity: 0.6;"></i></th>
-                                            <th id="th-channel" style="cursor: pointer; user-select: none;" title="Ordenar por Canal">Canal <i class="fa-solid fa-sort sort-icon" style="margin-left: 4px; font-size: 11px; opacity: 0.6;"></i></th>
-                                            <th id="th-views" style="cursor: pointer; user-select: none;" title="Ordenar por Visualizações">Visualizações <i class="fa-solid fa-sort sort-icon" style="margin-left: 4px; font-size: 11px; opacity: 0.6;"></i></th>
-                                            <th id="th-published" style="cursor: pointer; user-select: none;" title="Ordenar por Data de Publicação">Publicação <i class="fa-solid fa-sort sort-icon" style="margin-left: 4px; font-size: 11px; opacity: 0.6;"></i></th>
+                                            <th width="40px" data-i18n="th_select">Selecionar</th>
+                                            <th data-i18n="th_thumbnail">Miniatura</th>
+                                            <th id="th-title" style="cursor: pointer; user-select: none;" title="Ordenar por Título A-Z" data-i18n="th_title">Título <i class="fa-solid fa-sort sort-icon" style="margin-left: 4px; font-size: 11px; opacity: 0.6;"></i></th>
+                                            <th id="th-channel" style="cursor: pointer; user-select: none;" title="Ordenar por Canal" data-i18n="th_channel">Canal <i class="fa-solid fa-sort sort-icon" style="margin-left: 4px; font-size: 11px; opacity: 0.6;"></i></th>
+                                            <th id="th-views" style="cursor: pointer; user-select: none;" title="Ordenar por Visualizações" data-i18n="th_views">Visualizações <i class="fa-solid fa-sort sort-icon" style="margin-left: 4px; font-size: 11px; opacity: 0.6;"></i></th>
+                                            <th id="th-published" style="cursor: pointer; user-select: none;" title="Ordenar por Data de Publicação" data-i18n="th_published">Publicação <i class="fa-solid fa-sort sort-icon" style="margin-left: 4px; font-size: 11px; opacity: 0.6;"></i></th>
                                         </tr>
                                     </thead>
                                     <tbody id="search-results-tbody">
@@ -155,7 +155,7 @@
                             
                             <div class="pagination-footer">
                                 <span id="search-results-count">Mostrando 0 vídeos</span>
-                                <button class="btn btn-outline btn-xs" id="btn-search-next-page" disabled>
+                                <button class="btn btn-outline btn-xs" id="btn-search-next-page" disabled data-i18n="btn_search_next_page">
                                     Carregar Mais Vídeos <i class="fa-solid fa-arrow-right"></i>
                                 </button>
                             </div>
@@ -168,22 +168,22 @@
                     <div class="card-header">
                         <div class="header-icon extraction-icon"><i class="fa-solid fa-circle-down"></i></div>
                         <div>
-                            <h2>Passo 2: Simulador & Extração Profunda</h2>
-                            <p>Estime o custo, monitore a cota e capture comentários em lote</p>
+                            <h2 data-i18n="step2_title">Passo 2: Simulador & Extração Profunda</h2>
+                            <p data-i18n="step2_desc">Estime o custo, monitore a cota e capture comentários em lote</p>
                         </div>
                     </div>
 
                     <div class="card-body">
                         <div class="selection-summary">
                             <div class="summary-metric">
-                                <span class="metric-label">Vídeos Alvo Selecionados</span>
+                                <span class="metric-label" data-i18n="metric_selected_videos">Vídeos Alvo Selecionados</span>
                                 <span class="metric-value" id="selected-videos-count">0</span>
                             </div>
                             
                             <div class="summary-metric">
-                                <span class="metric-label">Estimativa de Custos</span>
+                                <span class="metric-label" data-i18n="metric_cost_estimate">Estimativa de Custos</span>
                                 <span class="metric-value highlight" id="estimated-quota-cost">0 unidades</span>
-                                <small class="text-muted" id="estimated-cost-breakdown">Custo em cota da API</small>
+                                <small class="text-muted" id="estimated-cost-breakdown" data-i18n="cost_breakdown_desc">Custo em cota da API</small>
                             </div>
                         </div>
 
@@ -191,7 +191,7 @@
                         <div class="extraction-controls">
                             <div class="settings-inline">
                                 <div class="input-field">
-                                    <label for="max-comments-per-video">Máximo de comentários por vídeo</label>
+                                    <label for="max-comments-per-video" data-i18n="max_comments_label">Máximo de comentários por vídeo</label>
                                     <select id="max-comments-per-video">
                                         <option value="100">100 comentários (1 chamada)</option>
                                         <option value="500">500 comentários (5 chamadas)</option>
@@ -201,10 +201,10 @@
                             </div>
                             
                             <div class="actions-group-row">
-                                <button class="btn btn-success btn-lg" id="btn-start-extraction" disabled>
+                                <button class="btn btn-success btn-lg" id="btn-start-extraction" disabled data-i18n="btn_start_extraction">
                                     <i class="fa-solid fa-play"></i> Iniciar Coleta Profunda
                                 </button>
-                                <button class="btn btn-warning btn-lg" id="btn-pause-extraction" style="display: none;">
+                                <button class="btn btn-warning btn-lg" id="btn-pause-extraction" style="display: none;" data-i18n="btn_pause_extraction">
                                     <i class="fa-solid fa-pause"></i> Pausar Coleta
                                 </button>
                             </div>
@@ -213,7 +213,7 @@
                         <!-- Progresso da Coleta -->
                         <div class="extraction-progress-panel" id="extraction-progress-wrapper" style="display: none;">
                             <div class="progress-details">
-                                <span id="extraction-status-text">Processando...</span>
+                                <span id="extraction-status-text" data-i18n="extraction_status_processing">Processando...</span>
                                 <span id="extraction-progress-percentage">0%</span>
                             </div>
                             <div class="progress-bar-bg-lg">
@@ -231,8 +231,8 @@
                     <div class="card-header">
                         <div class="header-icon export-icon"><i class="fa-solid fa-file-export"></i></div>
                         <div>
-                            <h2>Passo 3: Exportação e Estruturação</h2>
-                            <p>Converta dados de comentários e interações em formatos quantitativos e de redes</p>
+                            <h2 data-i18n="step3_title">Passo 3: Exportação e Estruturação</h2>
+                            <p data-i18n="step3_desc">Converta dados de comentários e interações em formatos quantitativos e de redes</p>
                         </div>
                     </div>
 
@@ -240,7 +240,7 @@
                         <div class="success-message">
                             <i class="fa-solid fa-circle-check"></i>
                             <div>
-                                <h4>Extração Concluída com Sucesso!</h4>
+                                <h4 data-i18n="success_extraction_title">Extração Concluída com Sucesso!</h4>
                                 <p id="extraction-results-summary">Foram extraídos 0 comentários do total de vídeos analisados.</p>
                             </div>
                         </div>
@@ -248,18 +248,18 @@
                         <div class="export-grid">
                             <!-- Card de Rede Gephi -->
                             <div class="export-card">
-                                <h3><i class="fa-solid fa-diagram-project"></i> Redes Sociais (.GEXF)</h3>
-                                <p>Cria rede de interação (autores de comentários conectados aos vídeos). Pronto para importar no Gephi.</p>
-                                <button class="btn btn-primary btn-block" id="btn-export-gexf">
+                                <h3 data-i18n="export_card_gexf_title"><i class="fa-solid fa-diagram-project"></i> Redes Sociais (.GEXF)</h3>
+                                <p data-i18n="export_card_gexf_desc">Cria rede de interação (autores de comentários conectados aos vídeos). Pronto para importar no Gephi.</p>
+                                <button class="btn btn-primary btn-block" id="btn-export-gexf" data-i18n="btn_export_gexf">
                                     <i class="fa-solid fa-download"></i> Baixar GEXF (Redes)
                                 </button>
                             </div>
 
                             <!-- Card de Planilha CSV -->
                             <div class="export-card">
-                                <h3><i class="fa-solid fa-table"></i> Planilha Plana (.CSV)</h3>
-                                <p>Tabela de comentários limpa, incluindo IDs, texto, data, autor e likes. Adequado para R, SPSS, Python e Excel.</p>
-                                <button class="btn btn-primary btn-block" id="btn-export-csv">
+                                <h3 data-i18n="export_card_csv_title"><i class="fa-solid fa-table"></i> Planilha Plana (.CSV)</h3>
+                                <p data-i18n="export_card_csv_desc">Tabela de comentários limpa, incluindo IDs, texto, data, autor e likes. Adequado para R, SPSS, Python e Excel.</p>
+                                <button class="btn btn-primary btn-block" id="btn-export-csv" data-i18n="btn_export_csv">
                                     <i class="fa-solid fa-download"></i> Baixar CSV (Tabela)
                                 </button>
                             </div>
@@ -276,18 +276,18 @@
                         <div class="card-header">
                             <div class="header-icon sampling-icon"><i class="fa-solid fa-id-card"></i></div>
                             <div>
-                                <h2>Analisar Canal</h2>
-                                <p>Pesquise por nome, handle (@exemplo) ou ID do canal (UC...) para coletar metadados e estatísticas</p>
+                                <h2 data-i18n="channel_title">Analisar Canal</h2>
+                                <p data-i18n="channel_desc">Pesquise por nome, handle (@exemplo) ou ID do canal (UC...) para coletar metadados e estatísticas</p>
                             </div>
                         </div>
                         <div class="card-body">
                             <form id="channel-search-form" class="search-grid" style="grid-template-columns: 3fr 1.2fr; gap: 16px;">
                                 <div class="input-field">
-                                    <label for="channel-query">Nome do Canal, Handle ou ID</label>
-                                    <input type="text" id="channel-query" placeholder="Ex: @AtilaIamarino ou UC_x5DGlrNy2jd_v4vN76L7Q" required>
+                                    <label for="channel-query" data-i18n="channel_query_label">Nome do Canal, Handle ou ID</label>
+                                    <input type="text" id="channel-query" data-i18n-placeholder="channel_query_placeholder" placeholder="Ex: @AtilaIamarino ou UC_x5DGlrNy2jd_v4vN76L7Q" required>
                                 </div>
                                 <div class="input-field flex-end">
-                                    <button type="submit" class="btn btn-primary btn-block" id="btn-search-channel">
+                                    <button type="submit" class="btn btn-primary btn-block" id="btn-search-channel" data-i18n="btn_search_channel">
                                         <i class="fa-solid fa-magnifying-glass"></i> Analisar Canal
                                     </button>
                                 </div>
@@ -310,7 +310,7 @@
                                 </div>
                                 
                                 <div class="input-field" style="margin-bottom: 24px;">
-                                    <label>Descrição do Canal</label>
+                                    <label data-i18n="channel_description_label">Descrição do Canal</label>
                                     <p id="channel-description" style="font-size: 13px; color: var(--text-secondary); line-height: 1.5; background-color: var(--bg-primary); padding: 12px; border-radius: var(--radius-component); max-height: 150px; overflow-y: auto; font-weight: 400;">
                                         Sem descrição no canal.
                                     </p>
@@ -318,15 +318,15 @@
                                 
                                 <div class="selection-summary" style="margin-bottom: 0; grid-template-columns: 1fr 1fr 1fr;">
                                     <div class="summary-metric">
-                                        <span class="metric-label">Inscritos</span>
+                                        <span class="metric-label" data-i18n="channel_metric_subscribers">Inscritos</span>
                                         <span class="metric-value" id="channel-metric-subscribers">0</span>
                                     </div>
                                     <div class="summary-metric">
-                                        <span class="metric-label">Vídeos Enviados</span>
+                                        <span class="metric-label" data-i18n="channel_metric_videos">Vídeos Enviados</span>
                                         <span class="metric-value" id="channel-metric-videos">0</span>
                                     </div>
                                     <div class="summary-metric">
-                                        <span class="metric-label">Visualizações Totais</span>
+                                        <span class="metric-label" data-i18n="channel_metric_views">Visualizações Totais</span>
                                         <span class="metric-value highlight" id="channel-metric-views">0</span>
                                     </div>
                                 </div>
@@ -339,29 +339,29 @@
                         <div class="card-header">
                             <div class="header-icon sampling-icon"><i class="fa-solid fa-list-check"></i></div>
                             <div>
-                                <h2>Listagem de Vídeos</h2>
-                                <p>Obtenha a lista completa de vídeos deste canal com todos os metadados (visualizações, curtidas, comentários e duração).</p>
+                                <h2 data-i18n="channel_videos_title">Listagem de Vídeos</h2>
+                                <p data-i18n="channel_videos_desc">Obtenha a lista completa de vídeos deste canal com todos os metadados (visualizações, curtidas, comentários e duração).</p>
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="quota-progress-container" style="margin-bottom: 16px; background-color: var(--bg-primary);">
                                 <div class="quota-info">
-                                    <span>Estimativa de Cota Necessária:</span>
+                                    <span data-i18n="channel_videos_cost_label">Estimativa de Cota Necessária:</span>
                                     <strong id="channel-videos-estimated-cost">0 unidades</strong>
                                 </div>
-                                <p class="section-desc" id="channel-videos-cost-breakdown" style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">
+                                <p class="section-desc" id="channel-videos-cost-breakdown" data-i18n="channel_videos_cost_desc" style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">
                                     Custo calculado: 2 unidades de cota a cada 50 vídeos.
                                 </p>
                             </div>
                             
-                            <button type="button" class="btn btn-success btn-lg btn-block" id="btn-start-channel-videos-extraction">
+                            <button type="button" class="btn btn-success btn-lg btn-block" id="btn-start-channel-videos-extraction" data-i18n="btn_start_channel_videos_extraction">
                                 <i class="fa-solid fa-play"></i> Listar todos os vídeos do canal
                             </button>
                             
                             <!-- Progresso de Extração de Vídeos do Canal -->
                             <div id="channel-videos-progress-wrapper" style="display: none; margin-top: 16px;">
                                 <div class="progress-details">
-                                    <span id="channel-videos-status-text">Coletando...</span>
+                                    <span id="channel-videos-status-text" data-i18n="channel_videos_status">Coletando...</span>
                                     <span id="channel-videos-progress-percentage">0%</span>
                                 </div>
                                 <div class="progress-bar-bg-lg" style="margin-top: 8px; margin-bottom: 12px;">
@@ -379,12 +379,12 @@
                                     <table class="table" id="channel-videos-table">
                                         <thead>
                                             <tr>
-                                                <th>Miniatura</th>
-                                                <th>Título</th>
-                                                <th>Visualizações</th>
+                                                <th data-i18n="th_thumbnail">Miniatura</th>
+                                                <th data-i18n="th_title">Título</th>
+                                                <th data-i18n="th_views">Visualizações</th>
                                                 <th>Curtidas</th>
                                                 <th>Comentários</th>
-                                                <th>Publicação</th>
+                                                <th data-i18n="th_published">Publicação</th>
                                                 <th>Duração</th>
                                             </tr>
                                         </thead>
@@ -395,7 +395,7 @@
                                 </div>
 
                                 <div style="margin-top: 16px; display: flex; justify-content: flex-end;">
-                                    <button type="button" class="btn btn-primary btn-sm" id="btn-export-channel-videos-csv">
+                                    <button type="button" class="btn btn-primary btn-sm" id="btn-export-channel-videos-csv" data-i18n="btn_export_channel_videos_csv">
                                         <i class="fa-solid fa-download"></i> Exportar CSV de Vídeos
                                     </button>
                                 </div>
@@ -408,23 +408,23 @@
                         <div class="card-header">
                             <div class="header-icon extraction-icon"><i class="fa-solid fa-comments"></i></div>
                             <div>
-                                <h2>Extrair comentários dos vídeos do canal</h2>
-                                <p>Capture comentários em lote dos vídeos do canal aplicando filtros temporais e limites de cota.</p>
+                                <h2 data-i18n="channel_comments_title">Extrair comentários dos vídeos do canal</h2>
+                                <p data-i18n="channel_comments_desc">Capture comentários em lote dos vídeos do canal aplicando filtros temporais e limites de cota.</p>
                             </div>
                         </div>
                         <div class="card-body">
                             <!-- Configurações de Filtro e Limite -->
                             <div class="search-grid" style="grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
                                 <div class="input-field">
-                                    <label for="channel-comments-scope">Filtrar Vídeos por Escopo</label>
+                                    <label for="channel-comments-scope" data-i18n="label_comments_scope">Filtrar Vídeos por Escopo</label>
                                     <select id="channel-comments-scope">
-                                        <option value="all">Todos os vídeos do canal</option>
-                                        <option value="date">Vídeos publicados entre datas</option>
+                                        <option value="all" data-i18n="opt_scope_all">Todos os vídeos do canal</option>
+                                        <option value="date" data-i18n="opt_scope_date">Vídeos publicados entre datas</option>
                                     </select>
                                 </div>
                                 
                                 <div class="input-field">
-                                    <label for="channel-comments-limit">Máximo de comentários por vídeo</label>
+                                    <label for="channel-comments-limit" data-i18n="label_comments_limit">Máximo de comentários por vídeo</label>
                                     <select id="channel-comments-limit">
                                         <option value="100">100 comentários (1 chamada)</option>
                                         <option value="500">500 comentários (5 chamadas)</option>
@@ -436,11 +436,11 @@
                             <!-- Filtros de data -->
                             <div class="search-grid" id="channel-comments-dates-wrapper" style="display: none; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
                                 <div class="input-field">
-                                    <label for="channel-comments-date-start">Data Inicial</label>
+                                    <label for="channel-comments-date-start" data-i18n="label_date_start">Data Inicial</label>
                                     <input type="date" id="channel-comments-date-start">
                                 </div>
                                 <div class="input-field">
-                                    <label for="channel-comments-date-end">Data Final</label>
+                                    <label for="channel-comments-date-end" data-i18n="label_date_end">Data Final</label>
                                     <input type="date" id="channel-comments-date-end">
                                 </div>
                             </div>
@@ -448,20 +448,20 @@
                             <!-- Painel de Informação de Cota -->
                             <div class="quota-progress-container" style="margin-bottom: 16px; background-color: var(--bg-primary);">
                                 <div class="quota-info">
-                                    <span>Estimativa de Cota para Comentários:</span>
+                                    <span data-i18n="label_comments_cost">Estimativa de Cota para Comentários:</span>
                                     <strong id="channel-comments-estimated-cost">0 unidades</strong>
                                 </div>
-                                <p class="section-desc" id="channel-comments-cost-breakdown" style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">
+                                <p class="section-desc" id="channel-comments-cost-breakdown" data-i18n="channel_comments_cost_desc" style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">
                                     Nenhum vídeo selecionado ou filtrado.
                                 </p>
                             </div>
 
                             <!-- Controles de Coleta -->
                             <div style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 12px;">
-                                <button type="button" class="btn btn-success btn-lg btn-block" id="btn-start-channel-comments-extraction">
+                                <button type="button" class="btn btn-success btn-lg btn-block" id="btn-start-channel-comments-extraction" data-i18n="btn_start_channel_comments_extraction">
                                     <i class="fa-solid fa-play"></i> Iniciar Coleta de Comentários
                                 </button>
-                                <button type="button" class="btn btn-warning btn-lg btn-block" id="btn-pause-channel-comments-extraction" style="display: none;">
+                                <button type="button" class="btn btn-warning btn-lg btn-block" id="btn-pause-channel-comments-extraction" style="display: none;" data-i18n="btn_pause_channel_comments_extraction">
                                     <i class="fa-solid fa-pause"></i> Pausar Coleta
                                 </button>
                             </div>
@@ -485,10 +485,10 @@
                                 <div class="results-header">
                                     <h3 id="channel-comments-count-title">Comentários Coletados (0)</h3>
                                     <div class="selection-actions" style="display: flex; gap: 8px;">
-                                        <button type="button" class="btn btn-primary btn-sm" id="btn-export-channel-comments-csv">
+                                        <button type="button" class="btn btn-primary btn-sm" id="btn-export-channel-comments-csv" data-i18n="btn_export_channel_comments_csv">
                                             <i class="fa-solid fa-download"></i> Baixar CSV (Tabela)
                                         </button>
-                                        <button type="button" class="btn btn-primary btn-sm" id="btn-export-channel-comments-gexf">
+                                        <button type="button" class="btn btn-primary btn-sm" id="btn-export-channel-comments-gexf" data-i18n="btn_export_channel_comments_gexf">
                                             <i class="fa-solid fa-download"></i> Baixar GEXF (Redes)
                                         </button>
                                     </div>
@@ -506,22 +506,22 @@
                         <div class="card-header">
                             <div class="header-icon sampling-icon"><i class="fa-solid fa-layer-group"></i></div>
                             <div>
-                                <h2>Canais em Lote</h2>
-                                <p>Cole uma lista de canais para consolidar metadados ou listar todos os seus vídeos em tabelas agregadas.</p>
+                                <h2 data-i18n="batch_title">Canais em Lote</h2>
+                                <p data-i18n="batch_desc">Cole uma lista de canais para consolidar metadados ou listar todos os seus vídeos em tabelas agregadas.</p>
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="input-field" style="margin-bottom: 20px;">
-                                <label for="batch-channels-input">IDs dos Canais (UC...) — um por linha ou separados por vírgula</label>
-                                <textarea id="batch-channels-input" rows="8" placeholder="Ex:&#10;UCsvqVGtbbyHaMoevxPAq9Fg&#10;UC_x5DGlrNy2jd_v4vN76L7Q, UCBcRF18a7Qf58cCRy5xuWwQ&#10;UCJrDMFOdv1I2k8n9oK_oskQ" style="width: 100%; background-color: var(--bg-primary); border: var(--border-width) solid var(--border-color); color: var(--text-primary); padding: 12px; border-radius: var(--radius-component); font-size: 13px; font-family: monospace; line-height: 1.5; resize: vertical; outline: none;"></textarea>
-                                <p style="margin-top: 6px; font-size: 11px; color: var(--text-secondary);"><i class="fa-solid fa-circle-info" style="margin-right: 4px;"></i>Aceita apenas IDs de canal do YouTube (começam com <strong>UC</strong> e têm 24 caracteres). Use o módulo <strong>Analisar Canal</strong> para encontrar o ID de um canal pelo nome ou @handle.</p>
+                                <label for="batch-channels-input" data-i18n="batch_input_label">IDs dos Canais (UC...) — um por linha ou separados por vírgula</label>
+                                <textarea id="batch-channels-input" rows="8" data-i18n-placeholder="batch_input_placeholder" placeholder="Ex:&#10;UCsvqVGtbbyHaMoevxPAq9Fg&#10;UC_x5DGlrNy2jd_v4vN76L7Q, UCBcRF18a7Qf58cCRy5xuWwQ&#10;UCJrDMFOdv1I2k8n9oK_oskQ" style="width: 100%; background-color: var(--bg-primary); border: var(--border-width) solid var(--border-color); color: var(--text-primary); padding: 12px; border-radius: var(--radius-component); font-size: 13px; font-family: monospace; line-height: 1.5; resize: vertical; outline: none;"></textarea>
+                                <p style="margin-top: 6px; font-size: 11px; color: var(--text-secondary);" data-i18n="batch_input_desc"><i class="fa-solid fa-circle-info" style="margin-right: 4px;"></i>Aceita apenas IDs de canal do YouTube (começam com <strong>UC</strong> e têm 24 caracteres). Use o módulo <strong>Analisar Canal</strong> para encontrar o ID de um canal pelo nome ou @handle.</p>
                             </div>
 
                             <div style="margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                                <button type="button" class="btn btn-primary btn-lg btn-block" id="btn-batch-channels-metadata">
+                                <button type="button" class="btn btn-primary btn-lg btn-block" id="btn-batch-channels-metadata" data-i18n="btn_batch_metadata">
                                     <i class="fa-solid fa-table-list"></i> Listar Metadados dos Canais
                                 </button>
-                                <button type="button" class="btn btn-success btn-lg btn-block" id="btn-batch-channels-videos">
+                                <button type="button" class="btn btn-success btn-lg btn-block" id="btn-batch-channels-videos" data-i18n="btn_batch_videos">
                                     <i class="fa-solid fa-video"></i> Listar Vídeos de Todos os Canais
                                 </button>
                             </div>
@@ -539,7 +539,7 @@
                                     <!-- Console de logs de lote -->
                                 </div>
                                 <div style="display: flex; gap: 8px; justify-content: flex-end;">
-                                    <button type="button" class="btn btn-warning btn-xs" id="btn-batch-channels-pause" style="display: none;">
+                                    <button type="button" class="btn btn-warning btn-xs" id="btn-batch-channels-pause" style="display: none;" data-i18n="btn_batch_pause">
                                         <i class="fa-solid fa-pause"></i> Pausar Processo
                                     </button>
                                 </div>
@@ -549,7 +549,7 @@
                             <div id="batch-channels-metadata-results" style="display: none; border-top: var(--border-width) solid var(--border-color); padding-top: 20px;">
                                 <div class="results-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                                     <h3 id="batch-channels-metadata-title">Metadados dos Canais (0)</h3>
-                                    <button type="button" class="btn btn-primary btn-sm" id="btn-export-batch-channels-metadata-csv">
+                                    <button type="button" class="btn btn-primary btn-sm" id="btn-export-batch-channels-metadata-csv" data-i18n="btn_export_batch_metadata">
                                         <i class="fa-solid fa-download"></i> Exportar CSV de Metadados
                                     </button>
                                 </div>
@@ -561,9 +561,9 @@
                                                 <th>Canal Pesquisado</th>
                                                 <th>Título Oficial</th>
                                                 <th>Handle / ID</th>
-                                                <th>Inscritos</th>
-                                                <th>Vídeos</th>
-                                                <th>Visualizações</th>
+                                                <th data-i18n="channel_metric_subscribers">Inscritos</th>
+                                                <th data-i18n="channel_metric_videos">Vídeos</th>
+                                                <th data-i18n="channel_metric_views">Visualizações</th>
                                                 <th>Status</th>
                                             </tr>
                                         </thead>
@@ -578,7 +578,7 @@
                             <div id="batch-channels-videos-results" style="display: none; border-top: var(--border-width) solid var(--border-color); padding-top: 20px;">
                                 <div class="results-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                                     <h3 id="batch-channels-videos-title">Vídeos Consolidados (0)</h3>
-                                    <button type="button" class="btn btn-primary btn-sm" id="btn-export-batch-channels-videos-csv">
+                                    <button type="button" class="btn btn-primary btn-sm" id="btn-export-batch-channels-videos-csv" data-i18n="btn_export_batch_videos">
                                         <i class="fa-solid fa-download"></i> Exportar CSV de Vídeos
                                     </button>
                                 </div>
@@ -586,13 +586,13 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>Canal</th>
-                                                <th>Miniatura</th>
+                                                <th data-i18n="th_channel">Canal</th>
+                                                <th data-i18n="th_thumbnail">Miniatura</th>
                                                 <th>Título do Vídeo</th>
-                                                <th>Visualizações</th>
+                                                <th data-i18n="th_views">Visualizações</th>
                                                 <th>Curtidas</th>
                                                 <th>Comentários</th>
-                                                <th>Publicação</th>
+                                                <th data-i18n="th_published">Publicação</th>
                                                 <th>Duração</th>
                                             </tr>
                                         </thead>
