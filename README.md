@@ -139,3 +139,10 @@ Developed by **Felipe Menegotto**:
 - B.Sc. in Physics from the Federal University of Rio Grande do Sul (UFRGS).
 - M.Sc. in Scientific Culture from the University of Lisbon.
 - Independent researcher focused on digital tools and methodologies for scientific research.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
