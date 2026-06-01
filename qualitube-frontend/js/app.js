@@ -3,8 +3,10 @@
  * Gerencia o fluxo de trabalho do pesquisador, o estado volátil e a orquestração stateless.
  */
 
-// Configuração do Backend - Ajustado para o Hugging Face Spaces
-const BACKEND_URL = 'https://fmenegottobr-qualitube-api.hf.space';
+// Configuração do Backend - Ajustado para o Hugging Face Spaces / Localhost dinâmico
+const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:8000'
+    : 'https://fmenegottobr-qualitube-api.hf.space';
 
 // Estado global da aplicação (em memória do JavaScript)
 const AppState = {
@@ -466,6 +468,24 @@ function validateFormStates() {
 async function performSearch(loadNextPage = false) {
     const query = DOM.searchQuery.value.trim();
     if (!query) return;
+
+    if (!loadNextPage) {
+        // Limpa o estado da extração e seleção anterior ao iniciar uma nova busca de palavras-chave
+        AppState.selectedVideos.clear();
+        AppState.extractedComments = [];
+        AppState.extractionQueue = [];
+        AppState.currentQueueIndex = 0;
+        AppState.nextCommentPageToken = null;
+        AppState.commentsCollectedForCurrentVideo = 0;
+
+        // Reseta a UI de progresso e exportação correspondente
+        updateSelectedSummary();
+        DOM.moduleExport.style.display = 'none';
+        DOM.extractionProgressWrapper.style.display = 'none';
+        DOM.extractionProgressPercentage.textContent = '0%';
+        DOM.extractionProgressFill.style.width = '0%';
+        DOM.extractionLogConsole.innerHTML = '';
+    }
 
     DOM.btnSearch.disabled = true;
     DOM.btnSearch.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Buscando...';
@@ -997,6 +1017,24 @@ async function performChannelAnalysis() {
     DOM.channelResultWrapper.style.display = 'none';
     DOM.channelVideosExtractionPanel.style.display = 'none';
     DOM.channelCommentsExtractionPanel.style.display = 'none';
+
+    // Limpa o estado anterior do canal para evitar misturar dados de sessões anteriores
+    AppState.channelVideos = [];
+    AppState.channelCommentsQueue = [];
+    AppState.channelExtractedComments = [];
+    AppState.currentChannelCommentsQueueIndex = 0;
+    AppState.channelCommentsNextPageToken = null;
+    AppState.channelCommentsCollectedForCurrentVideo = 0;
+    AppState.currentChannelUploadsPlaylistId = '';
+    AppState.currentChannelVideoCount = 0;
+
+    // Reseta elementos de UI do canal correspondentes para um estado limpo
+    DOM.channelVideosTbody.innerHTML = '';
+    DOM.channelCommentsLogConsole.innerHTML = '';
+    DOM.channelCommentsExportWrapper.style.display = 'none';
+    DOM.channelCommentsProgressWrapper.style.display = 'none';
+    DOM.channelVideosResultsWrapper.style.display = 'none';
+    DOM.channelVideosProgressWrapper.style.display = 'none';
 
     try {
         const url = `${BACKEND_URL}/api/channel?q=${encodeURIComponent(query)}`;
