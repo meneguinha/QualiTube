@@ -172,7 +172,12 @@ const DOM = {
     researcherModal: document.getElementById('researcher-modal'),
     btnCloseResearcherModal: document.getElementById('btn-close-researcher-modal'),
     btnCloseResearcherModalFooter: document.getElementById('btn-close-researcher-modal-footer'),
-    btnCopyPrompt: document.getElementById('btn-copy-prompt')
+    btnCopyPrompt: document.getElementById('btn-copy-prompt'),
+
+    // Compliance Modal
+    complianceModal: document.getElementById('compliance-modal'),
+    btnComplianceAgree: document.getElementById('btn-compliance-agree'),
+    btnComplianceCancel: document.getElementById('btn-compliance-cancel')
 };
 
 // Inicialização e Event Listeners
@@ -200,7 +205,7 @@ function setupEventListeners() {
     DOM.maxCommentsPerVideo.addEventListener('change', calculateEstimatedCost);
 
     // Controle de Extração
-    DOM.btnStartExtraction.addEventListener('click', startExtractionWorkflow);
+    DOM.btnStartExtraction.addEventListener('click', requestComplianceAndExtract);
     DOM.btnPauseExtraction.addEventListener('click', pauseExtractionWorkflow);
 
     // Exportações de Resultados
@@ -288,6 +293,22 @@ function setupEventListeners() {
             }
         });
     }
+
+    // Eventos do Modal de Compliance
+    if (DOM.btnComplianceAgree) {
+        DOM.btnComplianceAgree.addEventListener('click', handleComplianceAgree);
+    }
+    if (DOM.btnComplianceCancel) {
+        DOM.btnComplianceCancel.addEventListener('click', closeComplianceModal);
+    }
+    if (DOM.complianceModal) {
+        DOM.complianceModal.addEventListener('click', (e) => {
+            if (e.target === DOM.complianceModal) {
+                closeComplianceModal();
+            }
+        });
+    }
+    document.addEventListener('keydown', handleComplianceModalKeyDown);
 
     // Toggle do Accordion
     document.querySelectorAll('.accordion-header').forEach(header => {
@@ -409,6 +430,75 @@ function closeResearcherModal() {
         setTimeout(() => {
             DOM.researcherModal.style.display = 'none';
         }, 300);
+    }
+}
+
+// Funções de Controle do Modal de Compliance
+function requestComplianceAndExtract() {
+    const accepted = sessionStorage.getItem('qualitube_compliance_accepted');
+    if (accepted === 'true') {
+        startExtractionWorkflow();
+    } else {
+        openComplianceModal();
+    }
+}
+
+function openComplianceModal() {
+    if (DOM.complianceModal) {
+        // Sincroniza o idioma do modal
+        setLanguage(AppState.language);
+        
+        DOM.complianceModal.style.display = 'flex';
+        setTimeout(() => {
+            DOM.complianceModal.classList.add('active');
+            if (DOM.btnComplianceCancel) {
+                DOM.btnComplianceCancel.focus();
+            }
+        }, 10);
+    }
+}
+
+function closeComplianceModal() {
+    if (DOM.complianceModal) {
+        DOM.complianceModal.classList.remove('active');
+        setTimeout(() => {
+            DOM.complianceModal.style.display = 'none';
+        }, 300);
+    }
+}
+
+function handleComplianceAgree() {
+    sessionStorage.setItem('qualitube_compliance_accepted', 'true');
+    closeComplianceModal();
+    startExtractionWorkflow();
+}
+
+function handleComplianceModalKeyDown(e) {
+    if (!DOM.complianceModal || !DOM.complianceModal.classList.contains('active')) return;
+
+    if (e.key === 'Escape') {
+        closeComplianceModal();
+        return;
+    }
+
+    if (e.key === 'Tab') {
+        const focusableElements = DOM.complianceModal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        if (focusableElements.length === 0) return;
+        
+        const firstFocusable = focusableElements[0];
+        const lastFocusable = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey) {
+            if (document.activeElement === firstFocusable) {
+                lastFocusable.focus();
+                e.preventDefault();
+            }
+        } else {
+            if (document.activeElement === lastFocusable) {
+                firstFocusable.focus();
+                e.preventDefault();
+            }
+        }
     }
 }
 

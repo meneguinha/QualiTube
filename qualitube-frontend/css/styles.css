@@ -1346,6 +1346,47 @@ label, .sidebar-section h3, .table th {
     color: var(--text-accent-lavender);
 }
 
+/* Scoped styles for compliance modal */
+#compliance-modal.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.55);
+}
+
+#compliance-modal .modal-container {
+    max-width: 540px;
+}
+
+#compliance-modal .modal-body {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+#compliance-modal .compliance-icon {
+    font-size: 18px;
+    margin-right: 8px;
+}
+
+#compliance-modal .compliance-list {
+    margin-left: 20px;
+    list-style-type: decimal;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+#compliance-modal .compliance-list li {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+#compliance-modal .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
 
 
 

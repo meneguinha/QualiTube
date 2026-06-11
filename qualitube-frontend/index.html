@@ -753,6 +753,36 @@
         </div>
     </div>
 
+    <!-- Modal de Acordo de Compliance (YouTube API) -->
+    <div id="compliance-modal" class="modal-backdrop" style="display: none;" aria-modal="true" role="dialog">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-header-title">
+                    <span class="compliance-icon">⚠️</span>
+                    <h2 data-i18n="compliance_modal_title">Acordo de Uso de Dados — API do YouTube</h2>
+                </div>
+            </div>
+            <div class="modal-body">
+                <p class="modal-intro" data-i18n="compliance_modal_intro">
+                    Antes de extrair comentários, você deve concordar com os seguintes termos, em conformidade com os <strong>Termos de Serviço da YouTube API</strong> (Políticas III.D e III.E.4):
+                </p>
+                <ol class="compliance-list">
+                    <li data-i18n="compliance_modal_term1"><strong>Limite de 30 dias</strong> — Os dados extraídos (comentários, metadados) devem ser <strong>excluídos ou atualizados em até 30 dias corridos</strong> após a extração, conforme exigido pela política do YouTube.</li>
+                    <li data-i18n="compliance_modal_term2"><strong>Sem republicação</strong> — Os dados extraídos não podem ser republicados, vendidos ou compartilhados de forma que viole os Termos de Serviço do YouTube.</li>
+                    <li data-i18n="compliance_modal_term3"><strong>Direitos dos usuários respeitados</strong> — Se o autor de um comentário excluir seu conteúdo ou revogar o consentimento, você deve excluir esses dados de seus arquivos.</li>
+                    <li data-i18n="compliance_modal_term4"><strong>Uso acadêmico</strong> — Esta ferramenta destina-se a pesquisas acadêmicas sem fins lucrativos. Você concorda em não utilizar os dados extraídos para fins comerciais ou para identificar indivíduos.</li>
+                </ol>
+                <p class="modal-intro" data-i18n="compliance_modal_outro">
+                    Ao clicar em <strong>"Concordo"</strong>, você confirma que leu, entendeu e cumprirá estes termos.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-compliance-cancel" class="btn btn-secondary" data-i18n="compliance_btn_cancel">Cancelar</button>
+                <button id="btn-compliance-agree" class="btn btn-primary" data-i18n="compliance_btn_agree">Concordo</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts da aplicação -->
     <script src="js/i18n.js"></script>
     <script src="js/export.js"></script>

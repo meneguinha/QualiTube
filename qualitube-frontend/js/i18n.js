@@ -119,7 +119,18 @@ const translations = {
         step7_header: "Lembrete de Segurança Importante",
         step7_content: "<p><strong>Atenção com a segurança de sua chave de API!</strong></p><p>Sempre que você for orientar a IA a fazer alterações ou novas funcionalidades, lembre-se de <strong>nunca expor ou salvar sua chave de API diretamente nos arquivos de código-fonte</strong> do aplicativo.</p><p>Esse cuidado é essencial caso você decida colocar a ferramenta online (hospedá-la na internet ou compartilhar o código publicamente no GitHub). Chaves salvas diretamente nos arquivos podem ser expostas publicamente, permitindo que terceiros consumam sua cota de acesso.</p>",
         btn_understood: "Entendido",
-        btn_copy: "Copiar"
+        btn_copy: "Copiar",
+        
+        // Compliance Modal
+        compliance_modal_title: "Acordo de Uso de Dados — API do YouTube",
+        compliance_modal_intro: "Antes de extrair comentários, você deve concordar com os seguintes termos, em conformidade com os <strong>Termos de Serviço da YouTube API</strong> (Políticas III.D e III.E.4):",
+        compliance_modal_term1: "<strong>Limite de 30 dias</strong> — Os dados extraídos (comentários, metadados) devem ser <strong>excluídos ou atualizados em até 30 dias corridos</strong> após a extração, conforme exigido pela política do YouTube.",
+        compliance_modal_term2: "<strong>Sem republicação</strong> — Os dados extraídos não podem ser republicados, vendidos ou compartilhados de forma que viole os Termos de Serviço do YouTube.",
+        compliance_modal_term3: "<strong>Direitos dos usuários respeitados</strong> — Se o autor de um comentário excluir seu conteúdo ou revogar o consentimento, você deve excluir esses dados de seus arquivos.",
+        compliance_modal_term4: "<strong>Uso acadêmico</strong> — Esta ferramenta destina-se a pesquisas acadêmicas sem fins lucrativos. Você concorda em não utilizar os dados extraídos para fins comerciais ou para identificar indivíduos.",
+        compliance_modal_outro: "Ao clicar em <strong>\"Concordo\"</strong>, você confirma que leu, entendeu e cumprirá estes termos.",
+        compliance_btn_cancel: "Cancelar",
+        compliance_btn_agree: "Concordo"
     },
     en: {
         server_quota_title: "Server Quota",
@@ -241,6 +252,17 @@ const translations = {
         step7_header: "Important Security Reminder",
         step7_content: "<p><strong>Be careful with the security of your API key!</strong></p><p>Whenever you are guiding the AI to make changes or new features, remember to <strong>never expose or save your API key directly in the source code files</strong> of the application.</p><p>This care is essential if you decide to put the tool online (hosting it on the internet or sharing the code publicly on GitHub). Keys saved directly in the files can be exposed publicly, allowing third parties to consume your access quota.</p>",
         btn_understood: "Understood",
-        btn_copy: "Copy"
+        btn_copy: "Copy",
+        
+        // Compliance Modal
+        compliance_modal_title: "Data Use Agreement — YouTube API",
+        compliance_modal_intro: "Before extracting comments, you must agree to the following terms in compliance with the <strong>YouTube API Services Terms of Service</strong> (Policies III.D and III.E.4):",
+        compliance_modal_term1: "<strong>30-day data limit</strong> — Extracted data (comments, metadata) must be <strong>deleted or refreshed within 30 calendar days</strong> of extraction, as required by YouTube policy.",
+        compliance_modal_term2: "<strong>No republishing</strong> — Extracted data must not be republished, sold, or shared in ways that violate YouTube's Terms of Service.",
+        compliance_modal_term3: "<strong>User rights respected</strong> — If a comment author deletes their comment or revokes consent, you must delete that data from your files.",
+        compliance_modal_term4: "<strong>Research use only</strong> — This tool is intended for non-commercial academic research. You agree not to use extracted data for commercial purposes or to identify individuals.",
+        compliance_modal_outro: "By clicking <strong>\"I Agree\"</strong>, you confirm that you have read, understood, and will comply with these terms.",
+        compliance_btn_cancel: "Cancel",
+        compliance_btn_agree: "I Agree"
     }
 };
